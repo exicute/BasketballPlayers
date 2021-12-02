@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "+gJtcP6drYeGuQtCWOPEQfBZ61WCzT5PKoTesrDNzNXPA3LXTxXBqjRp9POR1Cvhob8suacu9KMP4rv525ehig==",
+  "success": true,
+  "projectFilePath": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\TestCPy.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\secre\\.nuget\\packages\\pysharpsoftware\\1.0.0\\pysharpsoftware.1.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"PySharpSoftware 1.0.0\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\", а не целевой платформы проекта \".NETCoreApp,Version=v3.1\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "PySharpSoftware",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
+}
