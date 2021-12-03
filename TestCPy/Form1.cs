@@ -21,11 +21,6 @@ namespace TestCPy
 
         private void loadButton_Click(object sender, EventArgs e)
         {
-            var engine = new PyEngineBuilder().Build();
-            var scriptPath = Path.Combine(Directory.GetCurrentDirectory(), "BasketabllParser.py");
-            var script = new PyScript(scriptPath, PyScriptMode.Path);
-
-            engine.Execute(script);
 
             using (FileStream fstream = File.OpenRead($"Atlanta.txt"))
             {
