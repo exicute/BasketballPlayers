@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+gJtcP6drYeGuQtCWOPEQfBZ61WCzT5PKoTesrDNzNXPA3LXTxXBqjRp9POR1Cvhob8suacu9KMP4rv525ehig==",
+  "dgSpecHash": "C/qbCu29Cp+Ifgb/vgYsfqHUXGJWms4BG40iXA+xpHcM5QuVliN8Do+pbdhhN6/WVCjWiD22C2SRGvRjj4729A==",
   "success": true,
-  "projectFilePath": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\TestCPy.csproj",
+  "projectFilePath": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\BasketballPlayersData.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\secre\\.nuget\\packages\\pysharpsoftware\\1.0.0\\pysharpsoftware.1.0.0.nupkg.sha512"
   ],

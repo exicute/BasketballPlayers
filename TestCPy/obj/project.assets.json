@@ -40,9 +40,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\TestCPy.csproj",
-      "projectName": "TestCPy",
-      "projectPath": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\TestCPy.csproj",
+      "projectUniqueName": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\BasketballPlayersData.csproj",
+      "projectName": "BasketballPlayersData",
+      "projectPath": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\BasketballPlayersData.csproj",
       "packagesPath": "C:\\Users\\secre\\.nuget\\packages\\",
       "outputPath": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\obj\\",
       "projectStyle": "PackageReference",

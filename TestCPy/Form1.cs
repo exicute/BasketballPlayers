@@ -8,27 +8,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PySharp;
+using System.Diagnostics;
 
 namespace TestCPy
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
+            
         }
 
-        private void loadButton_Click(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-
-            using (FileStream fstream = File.OpenRead($"Atlanta.txt"))
+            string[] columnNames = new string[]{"Rk", "Unnamed: 1",  "Age", "G", "GS", "MP",  "FG", "FGA", "FG%", "3P", "3PA", "3P%", "2P",  "2PA", "2P%", "eFG%", "FT",
+                                                "FTA", "FT%", "ORB", "DRB", "TRB", "AST", "STL", "BLK", "TOV", "PF", "PTS"};
+            DataGridViewTextBoxColumn[] column = new DataGridViewTextBoxColumn[columnNames.Length];
+            for (int i = 0; i < columnNames.Length; i++)
             {
-                byte[] array = new byte[fstream.Length];
-                fstream.Read(array, 0, array.Length);
-                string textFromFile = System.Text.Encoding.Default.GetString(array);
-                listBox1.Text = textFromFile;
+                column[i] = new DataGridViewTextBoxColumn();
+                column[i].HeaderText = columnNames[i];
+                column[i].Name = columnNames[i];
+                column[i].Width = 40;
             }
+
+            TeamTable.Columns.AddRange(column);
+            TeamTable.Columns[1].Width = 90;
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo procInfo = new ProcessStartInfo()
+            {
+                FileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "//dist//BasketabllParser.exe",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            Process.Start(procInfo);
         }
     }
 }
