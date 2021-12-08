@@ -23,17 +23,29 @@ def teams_urls(req):
 
 
 def get_table(URL, urls):
-    teamColumns = []
-    req = requests.get(URL+urls[0])
-    tree = html.fromstring(req.content)
-    for num in range(1, 28):
-        stat_name = tree.xpath('//*[@id="totals"]/thead/tr/th[{}]/@data-stat'.format(num))
-        teamColumns.append(stat_name)
+    for url in urls:
+        teamUrl_req = requests.get(URL+url)
+        
+        tree = html.fromstring(teamUrl_req.content)
+        team_name = tree.xpath('//*[@id="meta"]/div[2]/h1/span[2]/text()')
+        table = tree.xpath('//*[@id="totals"]')
 
-    for x in range(len(teamColumns)):
-        for y in teamColumns[x]:
-            teamColumns[x] = y
+        pd_tables = pd.read_html(html.tostring(table[0], method='html'))
+        pd_table = pd_tables[0]
 
+        for name in team_name:
+            name_list = name.split()
+            if len(name_list)>2:
+                fName = name_list[0]
+                sName = name_list[1]
+                thName = name_list[2]
+            else:
+                fName = name_list[0]
+                sName = name_list[1]
+                thName = "_"
+            pd_table.to_excel('Players/{}_{}_{}.xlsx'.format(fName, sName, thName), sheet_name='stats', index=False)
+
+            
 
 
 
@@ -42,7 +54,3 @@ if __name__ == '__main__':
     req = requests.get(URL)
 
     get_table(URL, teams_urls(req))
-
-#    with open('players/PlayersStats/Atlanta.txt', 'w') as input_file:
-#        for item in teams_urls(req):
-#            input_file.write((html.tostring(item)).decode('utf-8'))
