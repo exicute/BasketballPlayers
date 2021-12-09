@@ -59,5 +59,16 @@ namespace BasketballPlayersData.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap imgbin_basketball_logo_backboard_basketball_basketball_symbol_fMiUxEz15Z5J7pa0xFNfgRyuE {
+            get {
+                object obj = ResourceManager.GetObject("imgbin-basketball-logo-backboard-basketball-basketball-symbol-fMiUxEz15Z5J7pa0xFN" +
+                        "fgRyuE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

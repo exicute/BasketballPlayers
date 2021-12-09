@@ -1,14 +1,25 @@
 {
   "version": 2,
-  "dgSpecHash": "bQyv8tOYhXTT6dIAcLdNrMTMKHX4wUv/Uwy8ZOLIA+ejuko+hV+TdkiMkET0Qe/FaGmIYTmbDs5GZFx1RB6l1g==",
+  "dgSpecHash": "kFAGt8xxZLYT0GnNHJIovmTzi/AZSoVHefLBnShuSohv7rphzkdYqRd0NwHygvzx7jKXAeu3fBSWkQdVJMyqHQ==",
   "success": true,
   "projectFilePath": "D:\\VisualStudioProject\\repos\\BasketballPlayers\\TestCPy\\BasketballPlayersData.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\secre\\.nuget\\packages\\exceldatareader\\3.6.0\\exceldatareader.3.6.0.nupkg.sha512",
     "C:\\Users\\secre\\.nuget\\packages\\exceldatareader.dataset\\3.6.0\\exceldatareader.dataset.3.6.0.nupkg.sha512",
+    "C:\\Users\\secre\\.nuget\\packages\\microsoft.office.interop.excel\\15.0.4795.1000\\microsoft.office.interop.excel.15.0.4795.1000.nupkg.sha512",
     "C:\\Users\\secre\\.nuget\\packages\\pysharpsoftware\\1.0.0\\pysharpsoftware.1.0.0.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"Microsoft.Office.Interop.Excel 15.0.4795.1000\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\", а не целевой платформы проекта \".NETCoreApp,Version=v3.1\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "Microsoft.Office.Interop.Excel",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",

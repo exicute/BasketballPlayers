@@ -21,7 +21,7 @@ namespace TestCPy
                                                 "Milwaukee Bucks", "Minnesota Timberwolves", "New Orlean Pelicans", "New York Knicks", "Oklahoma City Thunder",
                                                 "Orlando Magic", "Philadelphia 76ers", "Phoenix Suns", "Portland Trail Blazers", "Sacramento Kings",
                                                 "San Antonio Spurs", "Toronto Raptors", "Utah Jazz", "Washington Wizards", "Denver Nuggets"};
-        Dictionary<string, string> teamNames_inexcel = new Dictionary<string, string>();
+        public Dictionary<string, string> teamNames_inexcel = new Dictionary<string, string>();
 
         DataTable thisTable;
 
@@ -33,8 +33,8 @@ namespace TestCPy
             {
                 string tableName;
                 string[] devidedStr = str.Split();
-                if (devidedStr.Length < 3) tableName = devidedStr[0] + "_" + devidedStr[1] + "__.xlsx";
-                else tableName = devidedStr[0] + "_" + devidedStr[1] + "_" + devidedStr[2] + ".xlsx";
+                if (devidedStr.Length < 3) tableName = devidedStr[0] + "_" + devidedStr[1] + "__";
+                else tableName = devidedStr[0] + "_" + devidedStr[1] + "_" + devidedStr[2];
                 teamNames_inexcel[str] = tableName;
             }
 
@@ -44,8 +44,6 @@ namespace TestCPy
                 TeamList.Items.Add(str);
             }
             TeamList.SelectedIndex = 0;    
-
-            
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -96,8 +94,11 @@ namespace TestCPy
         {
             try {
                 OpenTeamTable(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
-                            + $"//Players//{teamNames_inexcel[Convert.ToString(TeamList.SelectedItem)]}");
-                TeamTable.DataSource = thisTable; 
+                            + $"//Players//{teamNames_inexcel[Convert.ToString(TeamList.SelectedItem)]}.xlsx");
+                TeamTable.DataSource = thisTable;
+                TeamTable.ColumnHeadersDefaultCellStyle.BackColor = Color.Moccasin;
+                TeamTable.RowsDefaultCellStyle.BackColor = Color.LightSkyBlue;
+                
             }
             catch(System.IO.IOException)
             {
