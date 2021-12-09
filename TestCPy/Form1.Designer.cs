@@ -39,42 +39,15 @@ namespace TestCPy
             // 
             // TeamList
             // 
+            this.TeamList.BackColor = System.Drawing.Color.LightCoral;
+            this.TeamList.Font = new System.Drawing.Font("Verdana", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.TeamList.ForeColor = System.Drawing.SystemColors.Control;
             this.TeamList.FormattingEnabled = true;
-            this.TeamList.Items.AddRange(new object[] {
-            "Atlanta Hawks",
-            "Boston Celtics",
-            "Brooklyn Nets",
-            "Charlotte Hornets",
-            "Chicago Bulls",
-            "Cleveland Cavaliers",
-            "Dallas Mavericks",
-            "Denver Nuggets",
-            "Detroit Pistons",
-            "Golden State Warriors",
-            "Houston Rockets",
-            "Indiana Pacers",
-            "Las Angeles Clippers",
-            "Los Angeles Lakers",
-            "Memphis Grizzlies",
-            "Miami Heat",
-            "Miwaukee Bucks",
-            "Minnesota Timberwolves",
-            "New Orlean Pelicans",
-            "New York Knicks",
-            "Oklahoma City Thunder",
-            "Orlando Magic",
-            "Philadelphia 76ers",
-            "Phoenix Suns",
-            "Portland Trail Blazers",
-            "Sacramento Kings",
-            "San Antonio Spurs",
-            "Toronto Raptors",
-            "Utah Jazz",
-            "Washington Wizards"});
             this.TeamList.Location = new System.Drawing.Point(12, 12);
             this.TeamList.Name = "TeamList";
-            this.TeamList.Size = new System.Drawing.Size(388, 28);
+            this.TeamList.Size = new System.Drawing.Size(388, 30);
             this.TeamList.TabIndex = 0;
+            this.TeamList.SelectedIndexChanged += new System.EventHandler(this.TeamList_SelectedIndexChanged);
             // 
             // TeamTable
             // 
@@ -97,7 +70,7 @@ namespace TestCPy
             this.TeamTable.ReadOnly = true;
             this.TeamTable.RowHeadersWidth = 51;
             this.TeamTable.RowTemplate.Height = 29;
-            this.TeamTable.Size = new System.Drawing.Size(1212, 577);
+            this.TeamTable.Size = new System.Drawing.Size(1310, 577);
             this.TeamTable.TabIndex = 1;
             // 
             // updateButton
@@ -107,7 +80,7 @@ namespace TestCPy
             this.updateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateButton.Font = new System.Drawing.Font("Franklin Gothic Demi", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.updateButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.updateButton.Location = new System.Drawing.Point(1126, 6);
+            this.updateButton.Location = new System.Drawing.Point(1224, 6);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(98, 45);
             this.updateButton.TabIndex = 2;
@@ -120,10 +93,11 @@ namespace TestCPy
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1236, 646);
+            this.ClientSize = new System.Drawing.Size(1332, 646);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.TeamTable);
             this.Controls.Add(this.TeamList);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainForm";
             this.Text = "Игроки";
             this.Load += new System.EventHandler(this.MainForm_Load);
