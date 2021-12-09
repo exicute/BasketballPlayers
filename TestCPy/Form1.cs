@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ExcelDataReader;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace TestCPy
 {
@@ -48,19 +49,6 @@ namespace TestCPy
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //string[] columnNames = new string[]{"Rk", "Unnamed: 1",  "Age", "G", "GS", "MP",  "FG", "FGA", "FG%", "3P", "3PA", "3P%", "2P",  "2PA", "2P%", "eFG%", "FT",
-            //                                    "FTA", "FT%", "ORB", "DRB", "TRB", "AST", "STL", "BLK", "TOV", "PF", "PTS"};
-            //DataGridViewTextBoxColumn[] column = new DataGridViewTextBoxColumn[columnNames.Length];
-            //for (int i = 0; i < columnNames.Length; i++)
-            //{
-            //    column[i] = new DataGridViewTextBoxColumn();
-            //    column[i].HeaderText = columnNames[i];
-            //    column[i].Name = columnNames[i];
-            //    column[i].Width = 40;
-            //}
-
-            //TeamTable.Columns.AddRange(column);
-            //TeamTable.Columns[1].Width = 90;
         }
 
         private async void updateButton_Click(object sender, EventArgs e)
@@ -103,6 +91,54 @@ namespace TestCPy
             catch(System.IO.IOException)
             {
             }
+        }
+
+        private void searchField_Click(object sender, EventArgs e)
+        {
+            searchField.Text = "";
+        }
+
+        private void searchField_MouseLeave(object sender, EventArgs e)
+        {
+            if (searchField.Text == "") searchField.Text = "ВВЕДИТЕ ИМЯ";
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            Excel.Workbook xlWB;
+            Excel.Worksheet xlSht;
+            Excel.Application xlApp = new Excel.Application();
+
+            for (int i = TeamTable.Rows.Count - 1; i >= 0; i--)
+            {
+                TeamTable.Rows.RemoveAt(i);
+            }
+            foreach (string str in teamNames)
+            {
+                try
+                {
+                    string xlFileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                                + $"//Players//{teamNames_inexcel[str]}.xlsx";
+
+                    xlWB = xlApp.Workbooks.Open(xlFileName);
+
+                    xlSht = (Microsoft.Office.Interop.Excel.Worksheet)xlWB.Worksheets["stats"];
+
+                    string Value1 = searchField.Text;
+                    string Value2 = xlSht.Range["B"].Value.ToString();
+
+                    if (Value1 == Value2)
+                    {
+                        TeamTable.Rows.Add(Value2);
+                    }
+                    xlWB.Close(true);
+                }
+                catch (System.Runtime.InteropServices.COMException)
+                {
+                    continue;
+                }
+            }
+            xlApp.Quit();
         }
     }
 }

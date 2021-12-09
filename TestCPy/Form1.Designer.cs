@@ -36,6 +36,7 @@ namespace TestCPy
             this.updateButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.searchButton = new System.Windows.Forms.Button();
+            this.searchField = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.TeamTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -46,7 +47,7 @@ namespace TestCPy
             this.TeamList.Font = new System.Drawing.Font("Verdana", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.TeamList.ForeColor = System.Drawing.SystemColors.Control;
             this.TeamList.FormattingEnabled = true;
-            this.TeamList.Location = new System.Drawing.Point(24, 28);
+            this.TeamList.Location = new System.Drawing.Point(23, 21);
             this.TeamList.Name = "TeamList";
             this.TeamList.Size = new System.Drawing.Size(388, 30);
             this.TeamList.TabIndex = 0;
@@ -68,7 +69,7 @@ namespace TestCPy
             this.TeamTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.TeamTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TeamTable.EnableHeadersVisualStyles = false;
-            this.TeamTable.Location = new System.Drawing.Point(12, 85);
+            this.TeamTable.Location = new System.Drawing.Point(12, 111);
             this.TeamTable.Name = "TeamTable";
             this.TeamTable.ReadOnly = true;
             this.TeamTable.RowHeadersWidth = 51;
@@ -83,9 +84,9 @@ namespace TestCPy
             this.updateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateButton.Font = new System.Drawing.Font("Franklin Gothic Demi", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.updateButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.updateButton.Location = new System.Drawing.Point(1217, 21);
+            this.updateButton.Location = new System.Drawing.Point(23, 54);
             this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(98, 45);
+            this.updateButton.Size = new System.Drawing.Size(98, 37);
             this.updateButton.TabIndex = 2;
             this.updateButton.Text = "Обновить";
             this.updateButton.UseVisualStyleBackColor = false;
@@ -95,7 +96,7 @@ namespace TestCPy
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1310, 62);
+            this.pictureBox1.Size = new System.Drawing.Size(1310, 93);
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
@@ -106,19 +107,32 @@ namespace TestCPy
             this.searchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.searchButton.Font = new System.Drawing.Font("Franklin Gothic Demi", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.searchButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.searchButton.Location = new System.Drawing.Point(1035, 21);
+            this.searchButton.Location = new System.Drawing.Point(1214, 54);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(176, 45);
+            this.searchButton.Size = new System.Drawing.Size(96, 37);
             this.searchButton.TabIndex = 4;
             this.searchButton.Text = "Искать";
             this.searchButton.UseVisualStyleBackColor = false;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // searchField
+            // 
+            this.searchField.Font = new System.Drawing.Font("Verdana", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.searchField.Location = new System.Drawing.Point(962, 21);
+            this.searchField.Name = "searchField";
+            this.searchField.Size = new System.Drawing.Size(348, 29);
+            this.searchField.TabIndex = 5;
+            this.searchField.Text = "ВВЕДИТЕ ИМЯ";
+            this.searchField.Click += new System.EventHandler(this.searchField_Click);
+            this.searchField.MouseLeave += new System.EventHandler(this.searchField_MouseLeave);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1332, 646);
+            this.ClientSize = new System.Drawing.Size(1332, 672);
+            this.Controls.Add(this.searchField);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.TeamList);
@@ -131,6 +145,7 @@ namespace TestCPy
             ((System.ComponentModel.ISupportInitialize)(this.TeamTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -141,6 +156,7 @@ namespace TestCPy
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.TextBox searchField;
     }
 }
 

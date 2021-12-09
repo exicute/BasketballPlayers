@@ -10,7 +10,8 @@
         "dependencies": {
           "ExcelDataReader": "3.6.0",
           "ExcelDataReader.DataSet": "3.6.0",
-          "PySharpSoftware": "1.0.0"
+          "PySharpSoftware": "1.0.0",
+          "Interop.Microsoft.Office.Interop.Excel": "1.9.0.0"
         },
         "runtime": {
           "BasketballPlayersData.dll": {}
@@ -42,6 +43,14 @@
             "fileVersion": "2.7.7.200"
           }
         }
+      },
+      "Interop.Microsoft.Office.Interop.Excel/1.9.0.0": {
+        "runtime": {
+          "Interop.Microsoft.Office.Interop.Excel.dll": {
+            "assemblyVersion": "1.9.0.0",
+            "fileVersion": "1.9.0.0"
+          }
+        }
       }
     }
   },
@@ -71,6 +80,11 @@
       "sha512": "sha512-2dssiKtcmOStwmyXKdglT7cCC+UfLKR5dZ5HkD60aM0eBrd8QyFxkExeEKOeVrdVC+C83HUe8QT+RIz6Wnuthg==",
       "path": "pysharpsoftware/1.0.0",
       "hashPath": "pysharpsoftware.1.0.0.nupkg.sha512"
+    },
+    "Interop.Microsoft.Office.Interop.Excel/1.9.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

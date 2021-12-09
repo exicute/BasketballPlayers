@@ -19,3 +19,6 @@ D:\VisualStudioProject\repos\BasketballPlayers\TestCPy\obj\Debug\netcoreapp3.1\B
 D:\VisualStudioProject\repos\BasketballPlayers\TestCPy\obj\Debug\netcoreapp3.1\BasketballPlayersData.genruntimeconfig.cache
 D:\VisualStudioProject\repos\BasketballPlayers\TestCPy\bin\Debug\netcoreapp3.1\ExcelDataReader.dll
 D:\VisualStudioProject\repos\BasketballPlayers\TestCPy\bin\Debug\netcoreapp3.1\ExcelDataReader.DataSet.dll
+D:\VisualStudioProject\repos\BasketballPlayers\TestCPy\bin\Debug\netcoreapp3.1\Interop.Microsoft.Office.Interop.Excel.dll
+D:\VisualStudioProject\repos\BasketballPlayers\TestCPy\obj\Debug\netcoreapp3.1\Interop.Microsoft.Office.Interop.Excel.dll
+D:\VisualStudioProject\repos\BasketballPlayers\TestCPy\obj\Debug\netcoreapp3.1\BasketballPlayersData.csproj.ResolveComReference.cache
