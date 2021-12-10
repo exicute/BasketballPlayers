@@ -19,7 +19,7 @@ namespace TestCPy
         string[] teamNames = new string[] {"Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", "Chicago Bulls",
                                                 "Cleveland Cavaliers", "Dallas Mavericks", "Detroit Pistons", "Golden State Warriors", "Houston Rockets",
                                                 "Indiana Pacers", "Los Angeles Lakers", "Los Angeles Clippers", "Memphis Grizzlies", "Miami Heat",
-                                                "Milwaukee Bucks", "Minnesota Timberwolves", "New Orlean Pelicans", "New York Knicks", "Oklahoma City Thunder",
+                                                "Milwaukee Bucks", "Minnesota Timberwolves", "New Orleans Pelicans", "New York Knicks", "Oklahoma City Thunder",
                                                 "Orlando Magic", "Philadelphia 76ers", "Phoenix Suns", "Portland Trail Blazers", "Sacramento Kings",
                                                 "San Antonio Spurs", "Toronto Raptors", "Utah Jazz", "Washington Wizards", "Denver Nuggets"};
         public Dictionary<string, string> teamNames_inexcel = new Dictionary<string, string>();
@@ -51,7 +51,7 @@ namespace TestCPy
         {
         }
 
-        private async void updateButton_Click(object sender, EventArgs e)
+        private void updateButton_Click(object sender, EventArgs e)
         {
             ProcessStartInfo procInfo = new ProcessStartInfo()
             {
@@ -59,23 +59,39 @@ namespace TestCPy
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
-            Process.Start(procInfo);
+            var thisProcess = Process.Start(procInfo);
         }
 
         private void OpenTeamTable(string path)
         {
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read);
-            IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
+            DataSet db;
 
-            DataSet db = reader.AsDataSet(new ExcelDataSetConfiguration()
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                ConfigureDataTable = (x) => new ExcelDataTableConfiguration()
+                using (IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    UseHeaderRow = true
+
+                    db = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    {
+                        ConfigureDataTable = (x) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = true
+                        }
+                    });
                 }
-            });
+            }
+
             foreach (DataTable table in db.Tables) thisTable = table;
+        }
+
+        private void GetSearchRowAsync(string path, int rowNum, string team)
+        {
+            if (rowNum >= 0)
+            {
+                TeamList.SelectedItem = team;
+                TeamTable.Rows[rowNum+1].Selected = true;
+            }
         }
 
         private void TeamList_SelectedIndexChanged(object sender, EventArgs e)
@@ -105,6 +121,11 @@ namespace TestCPy
 
         private void searchButton_Click(object sender, EventArgs e)
         {
+            string team = null;
+            string xlFileName = null;
+            int breakInt = 0;
+            int rowInt = -1;
+
             Excel.Workbook xlWB;
             Excel.Worksheet xlSht;
             Excel.Application xlApp = new Excel.Application();
@@ -115,9 +136,10 @@ namespace TestCPy
             }
             foreach (string str in teamNames)
             {
+                if (breakInt == 1) break;
                 try
                 {
-                    string xlFileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                    xlFileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath)
                                 + $"//Players//{teamNames_inexcel[str]}.xlsx";
 
                     xlWB = xlApp.Workbooks.Open(xlFileName);
@@ -125,11 +147,20 @@ namespace TestCPy
                     xlSht = (Microsoft.Office.Interop.Excel.Worksheet)xlWB.Worksheets["stats"];
 
                     string Value1 = searchField.Text;
-                    string Value2 = xlSht.Range["B"].Value.ToString();
 
-                    if (Value1 == Value2)
-                    {
-                        TeamTable.Rows.Add(Value2);
+                    for (int n = 2; n<20; n++) {
+                        try
+                        {
+                            string Value2 = xlSht.Range[$"B{n.ToString()}"].Value2.ToString();
+                            if (Value1 == Value2)
+                            {
+                                team = str;
+                                rowInt = n;
+                                breakInt = 1;
+                                break;
+                            }
+                        }
+                        catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException) { break; }
                     }
                     xlWB.Close(true);
                 }
@@ -139,6 +170,8 @@ namespace TestCPy
                 }
             }
             xlApp.Quit();
+
+            GetSearchRowAsync(xlFileName, rowInt, team);   
         }
     }
 }
