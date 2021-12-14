@@ -30,15 +30,14 @@ namespace TestCPy
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.TeamList = new System.Windows.Forms.ComboBox();
             this.TeamTable = new System.Windows.Forms.DataGridView();
             this.updateButton = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.teamPicture = new System.Windows.Forms.PictureBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.searchField = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.TeamTable)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.teamPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // TeamList
@@ -58,7 +57,6 @@ namespace TestCPy
             this.TeamTable.AllowUserToAddRows = false;
             this.TeamTable.AllowUserToDeleteRows = false;
             this.TeamTable.BackgroundColor = System.Drawing.Color.AliceBlue;
-            this.TeamTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TeamTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -92,13 +90,14 @@ namespace TestCPy
             this.updateButton.UseVisualStyleBackColor = false;
             this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
-            // pictureBox1
+            // teamPicture
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1310, 93);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
+            this.teamPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.teamPicture.Location = new System.Drawing.Point(12, 12);
+            this.teamPicture.Name = "teamPicture";
+            this.teamPicture.Size = new System.Drawing.Size(1310, 93);
+            this.teamPicture.TabIndex = 3;
+            this.teamPicture.TabStop = false;
             // 
             // searchButton
             // 
@@ -117,33 +116,32 @@ namespace TestCPy
             // 
             // searchField
             // 
-            this.searchField.Font = new System.Drawing.Font("Verdana", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.searchField.Font = new System.Drawing.Font("Franklin Gothic Demi", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.searchField.Location = new System.Drawing.Point(962, 21);
             this.searchField.Name = "searchField";
-            this.searchField.Size = new System.Drawing.Size(348, 29);
+            this.searchField.Size = new System.Drawing.Size(348, 28);
             this.searchField.TabIndex = 5;
             this.searchField.Text = "ВВЕДИТЕ ИМЯ";
             this.searchField.Click += new System.EventHandler(this.searchField_Click);
-            this.searchField.MouseLeave += new System.EventHandler(this.searchField_MouseLeave);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackColor = System.Drawing.Color.MidnightBlue;
             this.ClientSize = new System.Drawing.Size(1332, 672);
             this.Controls.Add(this.searchField);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.TeamList);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.teamPicture);
             this.Controls.Add(this.TeamTable);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainForm";
             this.Text = "Игроки";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.TeamTable)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.teamPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -154,7 +152,7 @@ namespace TestCPy
         private System.Windows.Forms.ComboBox TeamList;
         private System.Windows.Forms.DataGridView TeamTable;
         private System.Windows.Forms.Button updateButton;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox teamPicture;
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.TextBox searchField;
     }

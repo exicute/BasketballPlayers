@@ -85,12 +85,12 @@ namespace TestCPy
             foreach (DataTable table in db.Tables) thisTable = table;
         }
 
-        private void GetSearchRowAsync(string path, int rowNum, string team)
+        private void GetSearchRow(int rowNum, string team)
         {
             if (rowNum >= 0)
             {
                 TeamList.SelectedItem = team;
-                TeamTable.Rows[rowNum+1].Selected = true;
+                TeamTable.Rows[rowNum-2].Selected = true;
             }
         }
 
@@ -102,7 +102,9 @@ namespace TestCPy
                 TeamTable.DataSource = thisTable;
                 TeamTable.ColumnHeadersDefaultCellStyle.BackColor = Color.Moccasin;
                 TeamTable.RowsDefaultCellStyle.BackColor = Color.LightSkyBlue;
-                
+
+                teamPicture.Image = Image.FromFile(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                            + $"//Players//{teamNames_inexcel[Convert.ToString(TeamList.SelectedItem)]}.jpg");
             }
             catch(System.IO.IOException)
             {
@@ -112,11 +114,6 @@ namespace TestCPy
         private void searchField_Click(object sender, EventArgs e)
         {
             searchField.Text = "";
-        }
-
-        private void searchField_MouseLeave(object sender, EventArgs e)
-        {
-            if (searchField.Text == "") searchField.Text = "ВВЕДИТЕ ИМЯ";
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -162,16 +159,18 @@ namespace TestCPy
                         }
                         catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException) { break; }
                     }
-                    xlWB.Close(true);
+                    xlWB.Close();
+                    xlApp.Quit();
                 }
                 catch (System.Runtime.InteropServices.COMException)
                 {
                     continue;
                 }
             }
-            xlApp.Quit();
 
-            GetSearchRowAsync(xlFileName, rowInt, team);   
+            GetSearchRow(rowInt, team);   
         }
+
+
     }
 }
