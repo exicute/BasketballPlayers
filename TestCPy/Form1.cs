@@ -22,7 +22,7 @@ namespace TestCPy
                                                 "Milwaukee Bucks", "Minnesota Timberwolves", "New Orleans Pelicans", "New York Knicks", "Oklahoma City Thunder",
                                                 "Orlando Magic", "Philadelphia 76ers", "Phoenix Suns", "Portland Trail Blazers", "Sacramento Kings",
                                                 "San Antonio Spurs", "Toronto Raptors", "Utah Jazz", "Washington Wizards", "Denver Nuggets"};
-        public Dictionary<string, string> statsList = new Dictionary<string, string>(){
+        public Dictionary<string, string> statsList = new Dictionary<string, string>(){{"Rk", "A"}, {"Name", "B"},
                                             { "Age", "C"}, { "G", "D"}, { "GS", "E"}, { "MP", "F"}, { "FG","G"}, 
                                             { "FGA", "H"}, { "FG%", "I"}, { "3P", "J"}, { "3PA", "K"}, { "3P%", "L"}, { "2P", "M"},
                                             { "2PA", "N"}, { "2P%", "O"}, { "eFG%", "P"}, { "FT", "Q"}, { "FTA", "R"}, { "FT%", "S"},
@@ -55,7 +55,7 @@ namespace TestCPy
             statsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             foreach (string str in statsList.Keys)
             {
-                statsComboBox.Items.Add(str);
+                if (str != "Rk" & str != "Name") statsComboBox.Items.Add(str);
             }
 
             TeamList.SelectedIndex = 0;
@@ -143,7 +143,7 @@ namespace TestCPy
         {
             char number = e.KeyChar;
 
-            if (!(Char.IsDigit(number) | e.KeyChar == '.' | e.KeyChar == (char)Keys.Back))
+            if (!(Char.IsDigit(number) | e.KeyChar == ',' | e.KeyChar == (char)Keys.Back))
             {
                 e.Handled = true;
             }
@@ -230,9 +230,10 @@ namespace TestCPy
             if (numStats.Text != "" & numStats.Text != "ЧИСЛО")
             {
                 string stolb = statsList[statsComboBox.SelectedItem.ToString()];
-                double numOfStat = Convert.ToDouble(numStats.Text);
+                double Value1 = Convert.ToDouble(numStats.Text);
 
                 Excel.Workbook xlWB2;
+                Excel.Worksheet xlSht2;
 
                 File.Delete(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
                 + "//Players//stats_search_table.xlsx");
@@ -240,70 +241,96 @@ namespace TestCPy
                 xlWB2 = xlApp.Workbooks.Add(misValue);
                 xlWB2.SaveAs(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
                                 + "\\Players\\stats_search_table.xlsx");
-
-                foreach (string str in teamNames)
-                {
-                    xlFileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath)
-                                + $"//Players//{teamNames_inexcel[str]}.xlsx";
-
-                    xlWB = xlApp.Workbooks.Open(xlFileName);
-                    xlWB2 = xlApp.Workbooks.Open(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
-                                + "//Players//stats_search_table.xlsx");
-
-                    xlSht = (Microsoft.Office.Interop.Excel.Worksheet)xlWB.Worksheets["stats"];
-                    xlSht.Copy(After: xlWB2.Worksheets[xlWB2.Worksheets.Count]);
-
-                    xlWB.Close();
-                }
+                xlWB2 = xlApp.Workbooks.Open(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+            + "//Players//stats_search_table.xlsx");
 
                 if (morePrmtr.Checked == true)
                 {
-                    foreach (Microsoft.Office.Interop.Excel.Worksheet xlsht in xlWB2.Worksheets)
+                    int counter = 2;
+
+                    foreach (string str in teamNames)
                     {
-                        for (int n = 2; n<20; n++)
+                        xlFileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                                    + $"//Players//{teamNames_inexcel[str]}.xlsx";
+
+                        xlWB = xlApp.Workbooks.Open(xlFileName);
+
+                        xlSht = (Excel.Worksheet)xlWB.Worksheets["stats"];
+                        xlSht2 = (Excel.Worksheet)xlWB2.Worksheets[1];
+
+                        foreach (string strRow in statsList.Keys)
+                        {
+                            xlSht2.Cells[1, statsList[strRow]] = strRow;
+                        }
+
+                        for (int n = 2; n < xlSht2.Rows.Count - 1; n++)
                         {
                             try
                             {
-                                double Value2 = Convert.ToDouble(xlsht.Range[$"{stolb}{n.ToString()}"].Value2.ToString());
-                                if (Value2 < numOfStat)
+                                double Value2 = Convert.ToDouble(xlSht.Range[$"{stolb}{n.ToString()}"].Value2.ToString());
+                                if (Value2 >= Value1)
                                 {
-                                    xlsht.Rows[n.ToString()].Delete();
+                                    foreach (string strRow in statsList.Values)
+                                    {
+                                        xlSht2.Cells[counter, strRow] = xlSht.Cells[n, strRow];
+                                    }
+                                    counter += 1;
                                 }
                             }
-                            catch(Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
-                            {
-                                continue;
-                            }
+                            catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException) { break; }
                         }
-                    }
-                }
-                if (lessPrmtr.Checked == true)
-                {
-                    foreach (Microsoft.Office.Interop.Excel.Worksheet xlsht in xlWB2.Worksheets)
-                    {
-                        for (int n = 2; n < 20; n++)
-                        {
-                            try
-                            {
-                                double Value2 = Convert.ToDouble(xlsht.Range[$"{stolb}{n.ToString()}"].Value2.ToString());
-                                if (Value2 > numOfStat)
-                                {
-                                    xlsht.Rows[$"{stolb}{n.ToString()}"].Delete();
-                                }
-                            }
-                            catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
-                            {
-                                continue;
-                            }
-                        }
+
+                        xlWB.Close();
                     }
                 }
 
+                if (lessPrmtr.Checked == true)
+                {
+                    int counter = 2;
+
+                    foreach (string str in teamNames)
+                    {
+                        xlFileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                                    + $"//Players//{teamNames_inexcel[str]}.xlsx";
+
+                        xlWB = xlApp.Workbooks.Open(xlFileName);
+                        xlWB2 = xlApp.Workbooks.Open(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                                    + "//Players//stats_search_table.xlsx");
+
+                        xlSht = (Excel.Worksheet)xlWB.Worksheets["stats"];
+                        xlSht2 = (Excel.Worksheet)xlWB2.Worksheets[1];
+
+                        foreach (string strRow in statsList.Keys)
+                        {
+                            xlSht2.Cells[1, statsList[strRow]] = strRow;
+                        }
+
+                        for (int n = 2; n < xlSht2.Rows.Count-1; n++)
+                        {
+                            try
+                            {
+                                double Value2 = Convert.ToDouble(xlSht.Range[$"{stolb}{n.ToString()}"].Value2.ToString());
+                                if (Value2 <= Value1)
+                                {
+                                    foreach (string strRow in statsList.Values)
+                                    {
+                                        xlSht2.Cells[counter, strRow] = xlSht.Cells[n, strRow];
+                                    }
+                                    counter += 1;
+                                }
+                            }
+                            catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException) { break; }
+                        }
+
+                        xlWB.Close();
+                    }
+                }
                 xlWB2.Close(true);
                 xlApp.Quit();
 
                 OpenTeamTable(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
                                 + "//Players//stats_search_table.xlsx");
+                TeamTable.DataSource = thisTable;
             }
         }
     }
