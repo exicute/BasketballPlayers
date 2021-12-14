@@ -22,6 +22,13 @@ namespace TestCPy
                                                 "Milwaukee Bucks", "Minnesota Timberwolves", "New Orleans Pelicans", "New York Knicks", "Oklahoma City Thunder",
                                                 "Orlando Magic", "Philadelphia 76ers", "Phoenix Suns", "Portland Trail Blazers", "Sacramento Kings",
                                                 "San Antonio Spurs", "Toronto Raptors", "Utah Jazz", "Washington Wizards", "Denver Nuggets"};
+        public Dictionary<string, string> statsList = new Dictionary<string, string>(){
+                                            { "Age", "C"}, { "G", "D"}, { "GS", "E"}, { "MP", "F"}, { "FG","G"}, 
+                                            { "FGA", "H"}, { "FG%", "I"}, { "3P", "J"}, { "3PA", "K"}, { "3P%", "L"}, { "2P", "M"},
+                                            { "2PA", "N"}, { "2P%", "O"}, { "eFG%", "P"}, { "FT", "Q"}, { "FTA", "R"}, { "FT%", "S"},
+                                            { "ORB", "T"}, { "DRB", "U"}, { "TRB", "V"}, { "AST", "W"}, { "STL", "X"}, { "BLK", "Y"}, 
+                                            { "TOV", "Z"}, { "PF", "AA"}, { "PTS", "AB"}
+                                            };
         public Dictionary<string, string> teamNames_inexcel = new Dictionary<string, string>();
 
         DataTable thisTable;
@@ -44,7 +51,15 @@ namespace TestCPy
             {
                 TeamList.Items.Add(str);
             }
-            TeamList.SelectedIndex = 0;    
+
+            statsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            foreach (string str in statsList.Keys)
+            {
+                statsComboBox.Items.Add(str);
+            }
+
+            TeamList.SelectedIndex = 0;
+            statsComboBox.SelectedIndex = 0;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -62,6 +77,8 @@ namespace TestCPy
             var thisProcess = Process.Start(procInfo);
         }
 
+        
+        
         private void OpenTeamTable(string path)
         {
             DataSet db;
@@ -81,7 +98,6 @@ namespace TestCPy
                     });
                 }
             }
-
             foreach (DataTable table in db.Tables) thisTable = table;
         }
 
@@ -114,63 +130,181 @@ namespace TestCPy
         private void searchField_Click(object sender, EventArgs e)
         {
             searchField.Text = "";
+            numStats.Text = "ЧИСЛО";
+        }
+
+        private void numStats_Click(object sender, EventArgs e)
+        {
+            searchField.Text = "ВВЕДИТЕ ИМЯ";
+            numStats.Text = "";
+        }
+
+        private void numStats_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+
+            if (!(Char.IsDigit(number) | e.KeyChar == '.' | e.KeyChar == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void morePrmtr_CheckedChanged(object sender, EventArgs e)
+        {
+            if (morePrmtr.Checked == true)
+            {
+                lessPrmtr.Checked = false;
+            }
+        }
+
+        private void lessPrmtr_CheckedChanged(object sender, EventArgs e)
+        {
+            if (lessPrmtr.Checked == true)
+            {
+                morePrmtr.Checked = false;
+            }
         }
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            string team = null;
             string xlFileName = null;
-            int breakInt = 0;
-            int rowInt = -1;
 
             Excel.Workbook xlWB;
             Excel.Worksheet xlSht;
             Excel.Application xlApp = new Excel.Application();
+            xlApp.DisplayAlerts = false;
 
             for (int i = TeamTable.Rows.Count - 1; i >= 0; i--)
             {
                 TeamTable.Rows.RemoveAt(i);
             }
-            foreach (string str in teamNames)
+
+            if (searchField.Text != "" & searchField.Text != "ВВЕДИТЕ ИМЯ")
             {
-                if (breakInt == 1) break;
-                try
+                string team = null;
+                int breakInt = 0;
+                int rowInt = -1;
+
+                foreach (string str in teamNames)
+                {
+                    if (breakInt == 1) break;
+                    try
+                    {
+                        xlFileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                                    + $"//Players//{teamNames_inexcel[str]}.xlsx";
+
+                        xlWB = xlApp.Workbooks.Open(xlFileName);
+
+                        xlSht = (Microsoft.Office.Interop.Excel.Worksheet)xlWB.Worksheets["stats"];
+
+                        string Value1 = searchField.Text;
+
+                        for (int n = 2; n < 20; n++)
+                        {
+                            try
+                            {
+                                string Value2 = xlSht.Range[$"B{n.ToString()}"].Value2.ToString();
+                                if (Value1 == Value2)
+                                {
+                                    team = str;
+                                    rowInt = n;
+                                    breakInt = 1;
+                                    break;
+                                }
+                            }
+                            catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException) { break; }
+                        }
+                        xlWB.Close();
+                        xlApp.Quit();
+                    }
+                    catch (System.Runtime.InteropServices.COMException)
+                    {
+                        continue;
+                    }
+                }
+
+                GetSearchRow(rowInt, team);
+            }
+
+
+            if (numStats.Text != "" & numStats.Text != "ЧИСЛО")
+            {
+                string stolb = statsList[statsComboBox.SelectedItem.ToString()];
+                double numOfStat = Convert.ToDouble(numStats.Text);
+
+                Excel.Workbook xlWB2;
+
+                File.Delete(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                + "//Players//stats_search_table.xlsx");
+                object misValue = System.Reflection.Missing.Value;
+                xlWB2 = xlApp.Workbooks.Add(misValue);
+                xlWB2.SaveAs(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                                + "\\Players\\stats_search_table.xlsx");
+
+                foreach (string str in teamNames)
                 {
                     xlFileName = System.IO.Path.GetDirectoryName(Application.ExecutablePath)
                                 + $"//Players//{teamNames_inexcel[str]}.xlsx";
 
                     xlWB = xlApp.Workbooks.Open(xlFileName);
+                    xlWB2 = xlApp.Workbooks.Open(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                                + "//Players//stats_search_table.xlsx");
 
                     xlSht = (Microsoft.Office.Interop.Excel.Worksheet)xlWB.Worksheets["stats"];
+                    xlSht.Copy(After: xlWB2.Worksheets[xlWB2.Worksheets.Count]);
 
-                    string Value1 = searchField.Text;
+                    xlWB.Close();
+                }
 
-                    for (int n = 2; n<20; n++) {
-                        try
+                if (morePrmtr.Checked == true)
+                {
+                    foreach (Microsoft.Office.Interop.Excel.Worksheet xlsht in xlWB2.Worksheets)
+                    {
+                        for (int n = 2; n<20; n++)
                         {
-                            string Value2 = xlSht.Range[$"B{n.ToString()}"].Value2.ToString();
-                            if (Value1 == Value2)
+                            try
                             {
-                                team = str;
-                                rowInt = n;
-                                breakInt = 1;
-                                break;
+                                double Value2 = Convert.ToDouble(xlsht.Range[$"{stolb}{n.ToString()}"].Value2.ToString());
+                                if (Value2 < numOfStat)
+                                {
+                                    xlsht.Rows[n.ToString()].Delete();
+                                }
+                            }
+                            catch(Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
+                            {
+                                continue;
                             }
                         }
-                        catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException) { break; }
                     }
-                    xlWB.Close();
-                    xlApp.Quit();
                 }
-                catch (System.Runtime.InteropServices.COMException)
+                if (lessPrmtr.Checked == true)
                 {
-                    continue;
+                    foreach (Microsoft.Office.Interop.Excel.Worksheet xlsht in xlWB2.Worksheets)
+                    {
+                        for (int n = 2; n < 20; n++)
+                        {
+                            try
+                            {
+                                double Value2 = Convert.ToDouble(xlsht.Range[$"{stolb}{n.ToString()}"].Value2.ToString());
+                                if (Value2 > numOfStat)
+                                {
+                                    xlsht.Rows[$"{stolb}{n.ToString()}"].Delete();
+                                }
+                            }
+                            catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
+                            {
+                                continue;
+                            }
+                        }
+                    }
                 }
+
+                xlWB2.Close(true);
+                xlApp.Quit();
+
+                OpenTeamTable(System.IO.Path.GetDirectoryName(Application.ExecutablePath)
+                                + "//Players//stats_search_table.xlsx");
             }
-
-            GetSearchRow(rowInt, team);   
         }
-
-
     }
 }

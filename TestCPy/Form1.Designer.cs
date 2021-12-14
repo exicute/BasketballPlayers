@@ -36,6 +36,10 @@ namespace TestCPy
             this.teamPicture = new System.Windows.Forms.PictureBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.searchField = new System.Windows.Forms.TextBox();
+            this.statsComboBox = new System.Windows.Forms.ComboBox();
+            this.numStats = new System.Windows.Forms.TextBox();
+            this.morePrmtr = new System.Windows.Forms.CheckBox();
+            this.lessPrmtr = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.TeamTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.teamPicture)).BeginInit();
             this.SuspendLayout();
@@ -124,12 +128,63 @@ namespace TestCPy
             this.searchField.Text = "ВВЕДИТЕ ИМЯ";
             this.searchField.Click += new System.EventHandler(this.searchField_Click);
             // 
+            // statsComboBox
+            // 
+            this.statsComboBox.FormattingEnabled = true;
+            this.statsComboBox.Location = new System.Drawing.Point(740, 21);
+            this.statsComboBox.Name = "statsComboBox";
+            this.statsComboBox.Size = new System.Drawing.Size(118, 28);
+            this.statsComboBox.TabIndex = 6;
+            // 
+            // numStats
+            // 
+            this.numStats.Font = new System.Drawing.Font("Franklin Gothic Demi", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numStats.Location = new System.Drawing.Point(864, 21);
+            this.numStats.Name = "numStats";
+            this.numStats.Size = new System.Drawing.Size(92, 28);
+            this.numStats.TabIndex = 7;
+            this.numStats.Text = "ЧИСЛО";
+            this.numStats.Click += new System.EventHandler(this.numStats_Click);
+            this.numStats.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numStats_KeyPress);
+            // 
+            // morePrmtr
+            // 
+            this.morePrmtr.AutoSize = true;
+            this.morePrmtr.BackColor = System.Drawing.Color.Transparent;
+            this.morePrmtr.Checked = true;
+            this.morePrmtr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.morePrmtr.ForeColor = System.Drawing.SystemColors.Control;
+            this.morePrmtr.Location = new System.Drawing.Point(864, 54);
+            this.morePrmtr.Name = "morePrmtr";
+            this.morePrmtr.Size = new System.Drawing.Size(85, 24);
+            this.morePrmtr.TabIndex = 8;
+            this.morePrmtr.Text = "больше";
+            this.morePrmtr.UseVisualStyleBackColor = false;
+            this.morePrmtr.CheckedChanged += new System.EventHandler(this.morePrmtr_CheckedChanged);
+            // 
+            // lessPrmtr
+            // 
+            this.lessPrmtr.AutoSize = true;
+            this.lessPrmtr.BackColor = System.Drawing.Color.Transparent;
+            this.lessPrmtr.ForeColor = System.Drawing.SystemColors.Control;
+            this.lessPrmtr.Location = new System.Drawing.Point(864, 81);
+            this.lessPrmtr.Name = "lessPrmtr";
+            this.lessPrmtr.Size = new System.Drawing.Size(87, 24);
+            this.lessPrmtr.TabIndex = 9;
+            this.lessPrmtr.Text = "меньше";
+            this.lessPrmtr.UseVisualStyleBackColor = false;
+            this.lessPrmtr.CheckedChanged += new System.EventHandler(this.lessPrmtr_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
             this.ClientSize = new System.Drawing.Size(1332, 672);
+            this.Controls.Add(this.lessPrmtr);
+            this.Controls.Add(this.morePrmtr);
+            this.Controls.Add(this.numStats);
+            this.Controls.Add(this.statsComboBox);
             this.Controls.Add(this.searchField);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.updateButton);
@@ -155,6 +210,10 @@ namespace TestCPy
         private System.Windows.Forms.PictureBox teamPicture;
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.TextBox searchField;
+        private System.Windows.Forms.ComboBox statsComboBox;
+        private System.Windows.Forms.TextBox numStats;
+        private System.Windows.Forms.CheckBox morePrmtr;
+        private System.Windows.Forms.CheckBox lessPrmtr;
     }
 }
 
